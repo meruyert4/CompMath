@@ -1,30 +1,30 @@
-import numpy as np
+def func(x):
+    return x**3 - x**2 + 2
 
 
-def f(x):
-    return np.exp(x) - x ** 2
+def bisection(a, b):
+    if (func(a) * func(b) >= 0):
+        print("You have not assumed right a and b\n")
+        return
 
+    c = a
+    while ((b - a) >= 0.01):
 
-def bisection(f, a, b, tol=1e-5, max_iter=7):
-    iterates = []
-    for _ in range(max_iter):
+        # Find middle point
         c = (a + b) / 2
-        iterates.append((a, b, c, f(c)))
 
-        if abs(f(c)) < tol:
+        # Check if middle point is root
+        if (func(c) == 0.0):
             break
-        if f(c) * f(a) < 0:
+
+        # Decide the side to repeat the steps
+        if (func(c) * func(a) < 0):
             b = c
         else:
             a = c
-    return iterates
 
+    print("The value of root is : ", "%.4f" % c)
 
-a = 0
-b = 2
-
-iterates = bisection(f, a, b)
-
-print("Stage | a     | b     | c     | f(c)")
-for i, (a_val, b_val, c_val, f_val) in enumerate(iterates, 1):
-    print(f"{i:5} |{a_val:6.2f} |{b_val:6.2f} |{c_val:6.2f} |{f_val:6.2f}")
+a = -200
+b = 300
+bisection(a, b)

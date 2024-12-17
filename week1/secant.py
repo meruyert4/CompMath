@@ -1,10 +1,13 @@
 import math
 import numpy
-
-
 def f(x):
-    return x ** 2 - 16
-
+    # return x ** 2 - 16
+    # return x ** 3 * x - 1
+    # return x - math.cos(x)
+    # return math.exp(x) ** (x * -1) - x
+    # return x ** 3 + x ** 2+ x + 7
+    # return x ** 2 + 4 * math.sin(x)
+    return math.cos(x) - x * math.e ** x
 
 def secant(x0, x1, e, N):
     step = 1
@@ -28,4 +31,4 @@ def secant(x0, x1, e, N):
     print('\nRoot is: %0.8f' % x2)
 
 
-secant(1, 10, 0.000001, 100)
+secant(4, 20, 0.000001, 100)
