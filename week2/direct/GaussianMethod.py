@@ -1,16 +1,13 @@
 import numpy as np
 
 def Gauss_method(A, b):
-    # Combine A and b into the augmented matrix
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float).reshape(-1, 1)
     augmented_matrix = np.hstack((A, b))
 
     n = len(b)
 
-    # Forward elimination
     for i in range(n):
-        # Partial pivoting: find the max element in the current column
         max_row = i + np.argmax(abs(augmented_matrix[i:, i]))
         augmented_matrix[[i, max_row]] = augmented_matrix[[max_row, i]]
 
