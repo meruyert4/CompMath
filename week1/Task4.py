@@ -40,40 +40,45 @@ def eq6_derivative(x):  # Derivative of cos(x) - x*e^x
 
 # Bisection Method
 def bisection(f, a, b, tol=1e-6, max_iter=100):
+    i = 0
     if f(a) * f(b) >= 0:
         print("Bisection method fails. Root may not be bracketed.")
-        return None
+        return None, i
     for _ in range(max_iter):
         c = (a + b) / 2
         if abs(f(c)) < tol:
-            return c
+            return c, i + 1
         elif f(a) * f(c) < 0:
             b = c
         else:
             a = c
-    return c
+        i += 1
+    return c, i
 
 # Newton-Raphson Method
 def newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
     x = x0
+    i = 0
     for _ in range(max_iter):
-        x_new = x - f(x)/df(x)
+        x_new = x - f(x) / df(x)
         if abs(x_new - x) < tol:
-            return x_new
+            return x_new, i + 1
         x = x_new
-    return x
+        i += 1
+    return x, i
 
 # Secant Method
 def secant(f, x0, x1, tol=1e-6, max_iter=100):
+    i = 0
     for _ in range(max_iter):
         if abs(f(x1) - f(x0)) < 1e-12:
-            return x1
-        x_new = x1 - f(x1)*(x1 - x0)/(f(x1) - f(x0))
+            return x1, i + 1
+        x_new = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0))
         if abs(x_new - x1) < tol:
-            return x_new
+            return x_new, i + 1
         x0, x1 = x1, x_new
-    return x1
-
+        i += 1
+    return x1, i
 # Solve the equations
 methods = ["Bisection", "Newton-Raphson", "Secant"]
 equations = [(eq1, eq1_derivative, "x^3 - x - 1 = 0", 1, 2),
@@ -83,9 +88,11 @@ equations = [(eq1, eq1_derivative, "x^3 - x - 1 = 0", 1, 2),
              (eq5, eq5_derivative, "x^2 + 4*sin(x) = 0", -2, -1),
              (eq6, eq6_derivative, "cos(x) = x * e^x", 0, 1)]
 
-print(f"{'Equation':<25} {'Bisection':<10} {'Newton-Raphson':<15} {'Secant':<10}")
+print(f"{'Equation':<30} {'Bisection':<25} {'Newton-Raphson':<25} {'Secant':<25}")
+print(f"{'':<30} {'iteration':<20} {'iteration':<30} {'iteration':<40}")
+
 for eq, eq_der, label, a, b in equations:
-    bisect_root = bisection(eq, a, b)
-    newton_root = newton_raphson(eq, eq_der, (a+b)/2)
-    secant_root = secant(eq, a, b)
-    print(f"{label:<25} {bisect_root:<10.6f} {newton_root:<15.6f} {secant_root:<10.6f}")
+    bisect_root, iter_bi = bisection(eq, a, b, tol=1e-6)
+    newton_root, iter_new = newton_raphson(eq, eq_der, (a+b)/2 + 0.1, tol=1e-5)
+    secant_root, iter_se = secant(eq, a + 0.1, b - 0.1, tol=1e-4)
+    print(f"{label:<30} {iter_bi:<10} {bisect_root:<15.10f} {iter_new:<10} {newton_root:<15.10f} {iter_se:<10} {secant_root:<15.10f}")
