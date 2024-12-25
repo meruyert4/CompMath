@@ -1,5 +1,5 @@
-from .GaussSeidelMethod import gauss_seidel
+from .GaussSeidelMethod import Gauss_seidel
 from .JacobMethod import Jacobi_method
-from .RelaxationMethod import relaxation_method
+from .RelaxationMethod import Relaxation_method
 
-__all__ = ["gauss_seidel", "Jacobi_method", "relaxation_method"]
+__all__ = ["Gauss_seidel", "Jacobi_method", "Relaxation_method"]

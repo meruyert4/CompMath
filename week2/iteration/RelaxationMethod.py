@@ -1,6 +1,6 @@
 import numpy as np
 
-def relaxation_method(A, b, x0, omega, tolerance=1e-6, max_iterations=100):
+def Relaxation_method(A, b, x0, omega, tolerance=1e-6, max_iterations=100):
     n = len(b)
     x = x0.copy()
 
@@ -31,7 +31,7 @@ tolerance = 1e-6
 max_iterations = 100
 
 # try:
-#     solution, iterations = relaxation_method(A, b, x0, omega, tolerance, max_iterations)
+#     solution, iterations = Relaxation_method(A, b, x0, omega, tolerance, max_iterations)
 #     print(f"Solution: {solution}")
 #     print(f"Iterations: {iterations}")
 # except ValueError as e:

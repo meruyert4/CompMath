@@ -1,5 +1,7 @@
 import numpy as np
 
+import numpy as np
+
 def Jacobi_method(A, b, x0, tol, max_iterations):
     n = len(b)
     x = x0.copy()
@@ -8,11 +10,8 @@ def Jacobi_method(A, b, x0, tol, max_iterations):
         x_new = np.zeros_like(x)
 
         for i in range(n):
-            # Calculate the sum of A[i, j] * x[j] for all j except i
-            s = sum(A[i, j] * x[j] for j in range(n) if j != i)
-
-            # Update x_new[i]
-            x_new[i] = (b[i] - s) / A[i, i]
+            sum1 = sum(A[i, j] * x[j] for j in range(n) if j != i)
+            x_new[i] = (b[i] - sum1) / A[i, i]
 
         # Check for convergence
         if np.linalg.norm(x_new - x, ord=np.inf) < tol:
@@ -22,7 +21,6 @@ def Jacobi_method(A, b, x0, tol, max_iterations):
 
     raise ValueError("Jacobi method did not converge within the maximum number of iterations")
 
-# Example Usage
 # if __name__ == "__main__":
 #     A = np.array([[2, 1, 1],
 #                   [1, 3, -1],
