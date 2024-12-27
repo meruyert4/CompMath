@@ -16,7 +16,7 @@ def Gauss_method(A, b):
             print("The system has no unique solution.")
             return None
 
-        # Eliminate entries below the pivot
+        # subtract elements under pivot
         for j in range(i + 1, n):
             factor = augmented_matrix[j, i] / augmented_matrix[i, i]
             augmented_matrix[j, i:] -= factor * augmented_matrix[i, i:]
