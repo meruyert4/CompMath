@@ -1,20 +1,20 @@
 import math
 
 def func(x):
-    # return x ** 3 - x - 1
+    return x ** 3 - x - 1
     # return x - math.cos(x)
     # return math.e ** (x * -1) - x
     # return x ** 3 + x ** 2+ x + 7
     # return x ** 2 + 4 * math.sin(x)
-    return math.cos(x) - x * math.e ** x
+    # return math.cos(x) - x * math.e ** x
 
 def func_derivative(x):
-    # return 3 * x ** 2 - 1
+    return 3 * x ** 2 - 1
     # return 1 + math.sin(x)
     # return -1 * ((1 + math.e ** x)/math.e**x)
     # return 3 * x ** 2 + 2 * x + 1
     # return 2 * x + math.cos(x)
-    return math.sin(x) * (-1) - math.e ** x - x * math.e ** x
+    # return math.sin(x) * (-1) - math.e ** x - x * math.e ** x
 
 def newton_raphson(initial_guess, tol=1e-6, max_iter=100):
     x = initial_guess

@@ -12,6 +12,3 @@ print("Result with Cramer's Method: ", resCramer)
 
 resGaussian = Gauss_method(A, b)
 print("Result with Gaussian Method:", resGaussian)
-
-resJordan = Gauss_jordan(A, b)
-print("Result with Gauss Jordan Method", resJordan)

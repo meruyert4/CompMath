@@ -16,9 +16,10 @@ b = np.array([17, -18, 25], dtype=float)
 x0 = np.zeros_like(b)
 tol = 1e-3
 max_iterations = 100
-omega = 1.25
 
 def is_diagonally_dominant(A):
+    ''' for every row of the matrix, the magnitude of the diagonal entry in a row is greater than or equal to the
+    sum of the magnitudes of all the other (off-diagonal) entries in that row. '''
     n = len(A)
     for i in range(n):
         row_sum = sum(abs(A[i, j]) for j in range(n) if j != i)
@@ -28,9 +29,10 @@ def is_diagonally_dominant(A):
 
 print(is_diagonally_dominant(A))
 
+x02 = np.array([0.0, 0.0, 0.0])
 
-resGaussSeidel, iterSeidel = Gauss_seidel(A, b, x0, tol, max_iterations)
-print("Result with Gauss Seidel Method: ", resGaussSeidel, "in iterations: ", iterSeidel)
+resGaussSeidel, iterGauss = Gauss_seidel(A, b, x02)
+print("Result with Gauss Seidel Method: ", resGaussSeidel, "in iterations: ", iterGauss)
 
 resJacob, iterJacob = Jacobi_method(A, b, x0, tol, max_iterations)
 print("Result with Jacobi Method: ", resJacob, "in iterations: ", iterJacob)
