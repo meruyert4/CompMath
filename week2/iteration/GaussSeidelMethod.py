@@ -10,11 +10,11 @@ def Gauss_seidel(A, b, x0, tolerance=0.002, max_iterations=100):
 
         for i in range(n):
             # Compute the sums for the formula
-            sum1 = sum(A[i][j] * x[j] for j in range(i))         # Updated values
-            sum2 = sum(A[i][j] * x_old[j] for j in range(i + 1, n)) # Previous values
+            s1 = sum(A[i][j] * x[j] for j in range(i))         # Updated values
+            s2 = sum(A[i][j] * x_old[j] for j in range(i + 1, n)) # Previous values
 
             # Update xi
-            x[i] = (b[i] - sum1 - sum2) / A[i][i]
+            x[i] = (b[i] - s1 - s2) / A[i][i]
 
         # counting iterations
         iter = iter + 1
