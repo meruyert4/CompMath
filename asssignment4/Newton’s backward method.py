@@ -1,58 +1,42 @@
-# newton backward interpolation
-
-# Calculation of u mentioned in formula
-def u_cal(u, n):
-	temp = u
-	for i in range(n):
-		temp = temp * (u + i)
-	return temp
-
-# Calculating factorial of given n
-def fact(n):
-	f = 1
-	for i in range(2, n + 1):
-		f *= i
-	return f
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
 
 
-# Driver code
+def newton_backward_interpolation(x_values, y_values, x):
+    # Step size (h)
+    h = x_values[1] - x_values[0]
+
+    # Calculate p
+    n = len(x_values) - 1
+    p = (x - x_values[n]) / h
+
+    # Difference Table
+    diff_table = [y_values[:]]  # Initialize with y values
+
+    for i in range(1, len(x_values)):
+        diff_row = []
+        for j in range(len(diff_table[i - 1]) - 1):
+            diff_row.append(diff_table[i - 1][j + 1] - diff_table[i - 1][j])
+        diff_table.append(diff_row)
+
+    # Newton's Backward Formula
+    y_interp = y_values[-1]  # Last value of y
+    for i in range(1, len(x_values)):
+        term = (p * (p + 1)) if i > 1 else p
+        for j in range(2, i + 1):
+            term *= (p + j - 1)
+        y_interp += (term / factorial(i)) * diff_table[i][-1]
+
+    return y_interp
 
 
-# number of values given
-n = 5
-x = [1891, 1901, 1911, 1921, 1931]
+# Example: Interpolating using Newton's Backward Formula
+x_vals = [100, 150, 200, 250, 300, 350, 400]
+y_vals = [10.63, 13.03, 15.04, 16.81, 18.42, 19.90, 21.27]
 
-# y is used for difference
-# table and y[0] used for input
-y = [[0.0 for _ in range(n)] for __ in range(n)]
-y[0][0] = 46
-y[1][0] = 66
-y[2][0] = 81
-y[3][0] = 93
-y[4][0] = 101
-
-# Calculating the backward difference table
-for i in range(1, n):
-	for j in range(n - 1, i - 1, -1):
-		y[j][i] = y[j][i - 1] - y[j - 1][i - 1]
-
-
-# Displaying the backward difference table
-for i in range(n):
-	for j in range(i + 1):
-		print(y[i][j], end="\t")
-	print()
-
-# Value to interpolate at
-value = 1925
-
-# Initializing u and sum
-sum = y[n - 1][0]
-u = (value - x[n - 1]) / (x[1] - x[0])
-for i in range(1, n):
-	sum = sum + (u_cal(u, i) * y[n - 1][i]) / fact(i)
-
-print("\n Value at", value, "is", sum)
-
-
-# This code is contributed by phasing17
+# Interpolating y for x = 410 (near the end of the table)
+x_interp = 410
+y_result = newton_backward_interpolation(x_vals, y_vals, x_interp)
+print(f"The interpolated value of y for x = {x_interp} is {y_result:.2f}")

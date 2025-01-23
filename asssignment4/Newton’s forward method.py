@@ -1,56 +1,37 @@
-def u_cal(u, n):
-    temp = u;
+import numpy as np
+import math
+
+def newton_forward_interpolation(x_values, y_values, x):
+    n = len(x_values)
+    h = x_values[1] - x_values[0]
+
+    # Create the difference table
+    diff_table = np.zeros((n, n))
+    diff_table[:, 0] = y_values
+
+    for col in range(1, n):
+        for row in range(n - col):
+            diff_table[row, col] = diff_table[row + 1, col - 1] - diff_table[row, col - 1]
+
+    # Calculate p
+    p = (x - x_values[0]) / h
+
+    # Interpolate y using the formula
+    y = y_values[0]
+    factorial = 1
     for i in range(1, n):
-        temp = temp * (u - i);
-    return temp;
+        factorial *= i
+        term = (p)
+        for j in range(1, i):
+            term *= (p - j)
+        term *= diff_table[0, i] / factorial
+        y += term
 
+    return y
 
-# calculating factorial of given number n
-def fact(n):
-    f = 1;
-    for i in range(2, n + 1):
-        f *= i;
-    return f;
+x_values = [0, 1, 2, 3, 4]
+y_values = [1, 8, 27, 64, 125]  # (y = x^3)
+x = 2.5  # Value of x to interpolate
 
-
-# Driver Code
-
-# Number of values given
-n = 4;
-x = [45, 50, 55, 60];
-
-# y[][] is used for difference table
-# with y[][0] used for input
-y = [[0 for i in range(n)]
-     for j in range(n)];
-y[0][0] = 0.7071;
-y[1][0] = 0.7660;
-y[2][0] = 0.8192;
-y[3][0] = 0.8660;
-
-# Calculating the forward difference
-# table
-for i in range(1, n):
-    for j in range(n - i):
-        y[j][i] = y[j + 1][i - 1] - y[j][i - 1];
-
-# Displaying the forward difference table
-for i in range(n):
-    print(x[i], end="\t");
-    for j in range(n - i):
-        print(y[i][j], end="\t");
-    print("");
-
-# Value to interpolate at
-value = 52;
-
-# initializing u and sum
-sum = y[0][0];
-u = (value - x[0]) / (x[1] - x[0]);
-for i in range(1, n):
-    sum = sum + (u_cal(u, i) * y[0][i]) / fact(i);
-
-print("\nValue at", value,
-      "is", round(sum, 6));
-
-# This code is contributed by mits
+result = newton_forward_interpolation(x_values, y_values, x)
+print(f"Interpolated value at x = {x}: {result}")
