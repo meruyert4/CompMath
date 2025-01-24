@@ -3,7 +3,6 @@ def lagrange_interpolation(x_values, y_values, x):
     result = 0
 
     for i in range(n):
-        # Calculate the Lagrange basis polynomial L_i(x)
         term = y_values[i]
         for j in range(n):
             if i != j:
@@ -13,11 +12,9 @@ def lagrange_interpolation(x_values, y_values, x):
     return result
 
 
-# Example: Evaluate f(9) using Lagrange's formula
-x_values = [5, 7, 11, 13, 17]
-y_values = [150, 392, 1452, 2366, 5202]
-x_interp = 9
+x_values = [0, 1, 2, 3, 4]
+y_values = [1, 1, 8, 27, 64]
+x = 5
 
-# Interpolating f(x) at x = 9
-f_9 = lagrange_interpolation(x_values, y_values, x_interp)
-print(f"The interpolated value of f(9) is: {f_9:.2f}")
+f_5= lagrange_interpolation(x_values, y_values, x)
+print(f"The interpolated value of f(9) is: {f_5}")

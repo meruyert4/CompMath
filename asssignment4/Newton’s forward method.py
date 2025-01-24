@@ -12,6 +12,7 @@ def newton_forward_interpolation(x_values, y_values, x):
     for col in range(1, n):
         for row in range(n - col):
             diff_table[row, col] = diff_table[row + 1, col - 1] - diff_table[row, col - 1]
+            print(diff_table)
 
     # Calculate p
     p = (x - x_values[0]) / h
@@ -30,8 +31,8 @@ def newton_forward_interpolation(x_values, y_values, x):
     return y
 
 x_values = [0, 1, 2, 3, 4]
-y_values = [1, 8, 27, 64, 125]  # (y = x^3)
-x = 2.5  # Value of x to interpolate
+y_values = [1, 8, 27, 64, 125]
+x = 2.5
 
 result = newton_forward_interpolation(x_values, y_values, x)
 print(f"Interpolated value at x = {x}: {result}")
