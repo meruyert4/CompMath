@@ -17,6 +17,7 @@ def newton_polynomial(x, y, x_value):
     table = divided_diff_table(x, y, n)
     coeff = table[0, :]
 
+    print(table)
     # Evaluate the polynomial at x_value
     result = coeff[0]
     product_term = 1

@@ -16,5 +16,5 @@ x_values = [0, 1, 2, 3, 4]
 y_values = [1, 1, 8, 27, 64]
 x = 5
 
-f_5= lagrange_interpolation(x_values, y_values, x)
-print(f"The interpolated value of f(9) is: {f_5}")
+fx= lagrange_interpolation(x_values, y_values, x)
+print(f"The interpolated value of f({x}) is: {fx}")
