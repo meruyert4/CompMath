@@ -4,15 +4,15 @@ def f(x):
 
 def trapezoidal_rule(f, a, b, n):
     h = (b - a) / n
-    sum_y = f(a) + f(b)
+    sum = f(a) + f(b)
 
     for i in range(1, n):
-        sum_y += 2 * f(a + i * h)
+        sum += 2 * f(a + i * h)
 
-    return (h / 2) * sum_y
+    return (h / 2) * sum
 
 
-a, b = 0, 4
-n = 12
+a, b = 0, 10
+n = 4
 result = trapezoidal_rule(f, a, b, n)
 print("Approximate integral:", result)

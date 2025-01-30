@@ -1,24 +1,26 @@
 def f(x):
     return x ** 3 + x ** 2 + 3 * x + 45
 
-def booles_rule(f, a, b, n):
+def boole_rule(func, a, b, n):
     if n % 4 != 0:
-        raise ValueError("n must be a multiple of 4")
+        return None
 
     h = (b - a) / n
-    sum_y = 7 * (f(a) + f(b))
+    result = 7 * func(a)
 
-    for i in range(1, n, 4):
-        sum_y += 32 * (f(a + i * h) + f(a + (i + 3) * h))  # Terms 1 & 3
-    for i in range(2, n, 4):
-        sum_y += 12 * f(a + i * h)  # Terms 2
-    for i in range(4, n, 4):
-        sum_y += 14 * f(a + i * h)  # Terms 4
+    for i in range(1, n):
+        x = a + i * h
+        if i % 2 != 0:
+            result += 32 * func(x)
+        elif i % 2 == 0 and i % 4 != 0:
+            result += 12 * func(x)
+        else:
+            result += 14 * func(x)
 
-    return (2 * h / 45) * sum_y
+    result *= 2 * h / 45
+    return result
 
 a, b = 0, 4
-n = 4
-
-result = booles_rule(f, a, b, n)
+n = 12
+result = boole_rule(f, a, b, n)
 print("Approximate integral:", result)

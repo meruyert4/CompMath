@@ -1,23 +1,38 @@
 def f(x):
     return x ** 3 + x ** 2 + 3 * x + 45
 
-def simpsons_rule(f, a, b, n):
-    if n % 2 != 0:
-        raise ValueError("n must be even")
-
+def simpson_rule_1_3(func, a, b, n):
     h = (b - a) / n
-    sum_y = f(a) + f(b)
+    result = func(a) + func(b)
 
-    for i in range(1, n, 2):
-        sum_y += 4 * f(a + i * h)
+    for i in range(1, n):
+        x = a + i * h
+        if i % 2 == 0:
+            result += 2 * func(x)
+        else:
+            result += 4 * func(x)
 
-    for i in range(2, n - 1, 2):
-        sum_y += 2 * f(a + i * h)
+    result *= h / 3
+    return result
 
-    return (h / 3) * sum_y
+def simpson_rule_3_8(func, a, b, n):
+    h = (b - a) / n
+    result = func(a) + func(b)
+
+    for i in range(1, n):
+        x = a + i * h
+        if i % 3 == 0:
+            result += 2 * func(x)
+        else:
+            result += 3 * func(x)
+
+    result *= 3 * h / 8
+    return result
 
 a, b = 0, 4
 n = 4
 
-result = simpsons_rule(f, a, b, n)
-print("Approximate integral", result)
+res1 = simpson_rule_1_3(f, a, b, n)
+print(f"1/3: {res1}")
+res2 = simpson_rule_3_8(f, a, b, n)
+print(f"3/8: {res2}")
