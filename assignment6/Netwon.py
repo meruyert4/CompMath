@@ -21,9 +21,9 @@ def newton_forward_difference(x, y, h):
 
 f = lambda x: x ** 3 + 3 * x + 2
 
-x_values = np.array([0, 1,2,3])
+x_values = np.array([0, 1, 2, 3])
 
-h = x_values[1] - x_values[0]
+h = x_values[1] - x_values[0]  # step, in this case=1
 y_values = f(x_values)
 
 first_deriv, second_deriv, diff_table = newton_forward_difference(x_values, y_values, h)

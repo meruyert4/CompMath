@@ -7,7 +7,7 @@ def euler_method(f, x0, y0, h, steps):
     x_vals = [x0]
     y_vals = [y0]
     for _ in range(steps):
-        y0 = y0 + h * f(x0, y0)  # formula
+        y0 = y0 + h * f(x0, y0)
         x0 += h
         x_vals.append(x0)
         y_vals.append(y0)
@@ -18,7 +18,7 @@ def modified_euler_method(f, x0, y0, h, steps):
     y_vals = [y0]
     for _ in range(steps):
         y_pred = y0 + h * f(x0, y0)
-        y_corr = y0 + (h / 2) * (f(x0, y0) + f(x0 + h, y_pred))  # formula
+        y_corr = y0 + (h / 2) * (f(x0, y0) + f(x0 + h, y_pred))
         x0 += h
         y0 = y_corr
         x_vals.append(x0)
@@ -31,9 +31,9 @@ def runge_kutta_3rd(f, x0, y0, h, steps):
     for _ in range(steps):
         k1 = h * f(x0, y0)
         k2 = h * f(x0 + h / 2, y0 + k1 / 2)
-        k3 = h * f(x0 + h, y0 - k1 + 2 * k2)  # formula
+        k3 = h * f(x0 + h, y0 - k1 + 2 * k2)
 
-        y0 = y0 + (k1 + 4 * k2 + k3) / 6  # final formula
+        y0 = y0 + (k1 + 4 * k2 + k3) / 6
         x0 += h
         x_vals.append(x0)
         y_vals.append(y0)
@@ -46,9 +46,9 @@ def runge_kutta_4th(f, x0, y0, h, steps):
         k1 = h * f(x0, y0)
         k2 = h * f(x0 + h / 2, y0 + k1 / 2)
         k3 = h * f(x0 + h / 2, y0 + k2 / 2)
-        k4 = h * f(x0 + h, y0 + k3)  # formula
+        k4 = h * f(x0 + h, y0 + k3)
 
-        y0 = y0 + (k1 + 2 * k2 + 2 * k3 + k4) / 6  # final formula
+        y0 = y0 + (k1 + 2 * k2 + 2 * k3 + k4) / 6
         x0 += h
 
         x_vals.append(x0)
