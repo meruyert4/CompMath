@@ -9,19 +9,16 @@ def newton_forward_difference(x, y, h):
         for i in range(n - j):
             diff_table[i, j] = diff_table[i + 1, j - 1] - diff_table[i, j - 1]
 
-    first_derivative = (diff_table[0, 1] - (diff_table[0, 2] / 2) + (diff_table[0, 3] / 3)) / h
+    first_derivative = (diff_table[0, 1] - (diff_table[0, 2] / 2) + (diff_table[0, 3] / 3) - (diff_table[0,4]/4)) / h
 
-    if n > 2:
-        second_derivative = (diff_table[1, 2] - diff_table[0, 2]) / (h ** 2)
-    else:
-        second_derivative = diff_table[0, 2] / (h ** 2)
+    second_derivative = (diff_table[0, 2] - diff_table[0, 3] + 11/12*diff_table[0,4] ) / (h ** 2)
 
     return first_derivative, second_derivative, diff_table
 
 
 f = lambda x: x ** 3 + 3 * x + 2
 
-x_values = np.array([0, 1, 2, 3])
+x_values = np.array([1, 2, 3, 4, 5])
 
 h = x_values[1] - x_values[0]  # step, in this case=1
 y_values = f(x_values)
