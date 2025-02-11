@@ -7,7 +7,7 @@ def euler_method(f, x0, y0, h, steps):
     x_vals = [x0]
     y_vals = [y0]
     for _ in range(steps):
-        y0 = y0 + h * f(x0, y0)
+        y0 = y0 + h * f(x0, y0) #formula
         x0 += h
         x_vals.append(x0)
         y_vals.append(y0)
