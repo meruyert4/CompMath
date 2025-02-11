@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parameters
 beta = 0.0003  # Infection rate
 gamma = 0.1  # Recovery rate
 h = 0.1  # Step size (0.1 day)
@@ -14,7 +13,6 @@ R0 = 0 / 1e6
 
 N = S0 + I0 + R0
 
-# System of differential equations for SIR model
 def dS_dt(S, I):
     return -beta * S * I
 
@@ -27,7 +25,7 @@ def dR_dt(I):
     return gamma * I
 
 
-# RK4 method
+# runge kutta 4th method
 def runge_kutta(S0, I0, R0, h, days):
     steps = int(days / h)
     S, I, R = np.zeros(steps), np.zeros(steps), np.zeros(steps)
@@ -52,7 +50,6 @@ def runge_kutta(S0, I0, R0, h, days):
     return S * 1e6, I * 1e6, R * 1e6, np.arange(0, days, h)
 
 
-# Simulate original scenario
 print("Original scenario")
 S, I, R, time = runge_kutta(S0, I0, R0, h, days)
 
@@ -82,9 +79,8 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-# Social distancing: Reduce infection rate β by 50%
-print("\nSocial distancing: Reduce infection rate β by 50%")
-beta = 0.00015  # New infection rate for social distancing
+print("\nSocial distancing")
+beta *= 0.5  # New infection rate for social distancing
 S_social, I_social, R_social, _ = runge_kutta(S0, I0, R0, h, days)
 plt.figure(figsize=(12, 6))
 plt.plot(time, S_social, label='Susceptible (Social Distancing)')
@@ -92,7 +88,7 @@ plt.plot(time, I_social, label='Infected (Social Distancing)')
 plt.plot(time, R_social, label='Recovered (Social Distancing)')
 plt.xlabel('Days')
 plt.ylabel('Population')
-plt.title('Social Distancing - SIR Model')
+plt.title('Social Distancing')
 plt.legend()
 plt.grid(True)
 plt.show()
@@ -100,21 +96,21 @@ plt.show()
 # Original Scenario
 peak_infected = max(I)
 peak_day = time[np.argmax(I)]
-total_infected = (S0 * 1e6 - S[-1]) + (R[-1] - R0 * 1e6)
+total_infected = (S0 * 1e6 - S[-1]) + (R[-1] - R0 )
 print(f"Original Scenario:\n  Peak Infected: {int(peak_infected)} on day {peak_day:.1f}")
 print(f"  Total Infected: {int(total_infected)}")
 
 # Vaccination Scenario
 peak_infected_vaccine = max(I_vaccine)
 peak_day_vaccine = time[np.argmax(I_vaccine)]
-total_infected_vaccine = (S0 * 0.5 * 1e6 - S_vaccine[-1]) + (R_vaccine[-1] - R0 * 1e6)
+total_infected_vaccine = (S0 * 0.5 * 1e6 - S_vaccine[-1]) + (R_vaccine[-1] - R0 )
 print(f"\nVaccination Scenario:\n  Peak Infected: {int(peak_infected_vaccine)} on day {peak_day_vaccine:.1f}")
 print(f"  Total Infected: {int(total_infected_vaccine)}")
 
 # Social Distancing Scenario
 peak_infected_social = max(I_social)
 peak_day_social = time[np.argmax(I_social)]
-total_infected_social = (S0 * 1e6 - S_social[-1]) + (R_social[-1] - R0 * 1e6)
+total_infected_social = (S0 * 1e6 - S_social[-1]) + (R_social[-1] - R0)
 print(f"\nSocial Distancing Scenario:\n  Peak Infected: {int(peak_infected_social)} on day {peak_day_social:.1f}")
 print(f"  Total Infected: {int(total_infected_social)}")
 
