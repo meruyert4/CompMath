@@ -40,11 +40,9 @@ def runge_kutta(S0, I0, R0, h, days):
 
     return S * 1e6, I * 1e6, R * 1e6, np.arange(0, days, h)
 
-
-print("Original scenario")
+# Original scenario
+print("\nOriginal scenario")
 S, I, R, time = runge_kutta(S0, I0, R0, h, days)
-
-# Plot original scenario
 plt.figure(figsize=(12, 6))
 plt.plot(time, S, label='Susceptible')
 plt.plot(time, I, label='Infected')
@@ -70,6 +68,7 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+# Social Distancing
 print("\nSocial distancing: Reduce infection rate by 50%")
 beta *= 0.5
 S_social, I_social, R_social, _ = runge_kutta(S0, I0, R0, h, days)
@@ -83,6 +82,8 @@ plt.title('Social Distancing')
 plt.legend()
 plt.grid(True)
 plt.show()
+
+
 
 # Original Scenario
 peak_infected = max(I)
