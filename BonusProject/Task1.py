@@ -11,21 +11,15 @@ S0 = 999000 / 1e6
 I0 = 1000 / 1e6
 R0 = 0 / 1e6
 
-N = S0 + I0 + R0
-
 def dS_dt(S, I):
     return -beta * S * I
-
 
 def dI_dt(S, I):
     return beta * S * I - gamma * I
 
-
 def dR_dt(I):
     return gamma * I
 
-
-# runge kutta 4th method
 def runge_kutta(S0, I0, R0, h, days):
     steps = int(days / h)
     S, I, R = np.zeros(steps), np.zeros(steps), np.zeros(steps)
@@ -33,16 +27,13 @@ def runge_kutta(S0, I0, R0, h, days):
 
     for t in range(1, steps):
         k1_S, k1_I, k1_R = dS_dt(S[t - 1], I[t - 1]), dI_dt(S[t - 1], I[t - 1]), dR_dt(I[t - 1])
-        k2_S, k2_I, k2_R = dS_dt(S[t - 1] + h / 2 * k1_S, I[t - 1] + h / 2 * k1_I), dI_dt(S[t - 1] + h / 2 * k1_S, I[
-            t - 1] + h / 2 * k1_I), dR_dt(I[t - 1] + h / 2 * k1_R)
-        k3_S, k3_I, k3_R = dS_dt(S[t - 1] + h / 2 * k2_S, I[t - 1] + h / 2 * k2_I), dI_dt(S[t - 1] + h / 2 * k2_S, I[
-            t - 1] + h / 2 * k2_I), dR_dt(I[t - 1] + h / 2 * k2_R)
-        k4_S, k4_I, k4_R = dS_dt(S[t - 1] + h * k3_S, I[t - 1] + h * k3_I), dI_dt(S[t - 1] + h * k3_S,
-                                                                                  I[t - 1] + h * k3_I), dR_dt(I[t - 1] + h * k3_R)
+        k2_S, k2_I, k2_R = dS_dt(S[t - 1] + h / 2 * k1_S, I[t - 1] + h / 2 * k1_I), dI_dt(S[t - 1] + h / 2 * k1_S, I[t - 1] + h / 2 * k1_I), dR_dt(I[t - 1] + h / 2 * k1_R)
+        k3_S, k3_I, k3_R = dS_dt(S[t - 1] + h / 2 * k2_S, I[t - 1] + h / 2 * k2_I), dI_dt(S[t - 1] + h / 2 * k2_S, I[t - 1] + h / 2 * k2_I), dR_dt(I[t - 1] + h / 2 * k2_R)
+        k4_S, k4_I, k4_R = dS_dt(S[t - 1] + h * k3_S, I[t - 1] + h * k3_I), dI_dt(S[t - 1] + h * k3_S, I[t - 1] + h * k3_I), dR_dt(I[t - 1] + h * k3_R)
 
-        S[t] = S[t - 1] + (h / 6) * (k1_S + 2 * k2_S + 2 * k3_S + k4_S)
-        I[t] = I[t - 1] + (h / 6) * (k1_I + 2 * k2_I + 2 * k3_I + k4_I)
-        R[t] = R[t - 1] + (h / 6) * (k1_R + 2 * k2_R + 2 * k3_R + k4_R)
+        S[t] = S[t - 1] + (h / 6) * (k1_S + 2*k2_S + 2*k3_S + k4_S)
+        I[t] = I[t - 1] + (h / 6) * (k1_I + 2*k2_I + 2*k3_I + k4_I)
+        R[t] = R[t - 1] + (h / 6) * (k1_R + 2*k2_R + 2*k3_R + k4_R)
 
         if t % 10 == 0:
             print(f"Day {t * h:.1f}: S = {S[t]:.6f}, I = {I[t]:.6f}, R = {R[t]:.6f}")
@@ -65,8 +56,8 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-# Vaccination campaign: Reduce initial susceptible population by 50%
-print("\nVaccination campaign: Reduce initial susceptible population by 50%")
+# Vaccination campaign
+print("\nVaccination campaign: Reduce susceptible population by 50%")
 S_vaccine, I_vaccine, R_vaccine, _ = runge_kutta(S0 * 0.5, I0, R0, h, days)
 plt.figure(figsize=(12, 6))
 plt.plot(time, S_vaccine, label='Susceptible (Vaccination)')
@@ -74,13 +65,13 @@ plt.plot(time, I_vaccine, label='Infected (Vaccination)')
 plt.plot(time, R_vaccine, label='Recovered (Vaccination)')
 plt.xlabel('Days')
 plt.ylabel('Population')
-plt.title('Vaccination Campaign - SIR Model')
+plt.title('Vaccination Campaign')
 plt.legend()
 plt.grid(True)
 plt.show()
 
-print("\nSocial distancing")
-beta *= 0.5  # New infection rate for social distancing
+print("\nSocial distancing: Reduce infection rate by 50%")
+beta *= 0.5
 S_social, I_social, R_social, _ = runge_kutta(S0, I0, R0, h, days)
 plt.figure(figsize=(12, 6))
 plt.plot(time, S_social, label='Susceptible (Social Distancing)')
